@@ -1,0 +1,34 @@
+# Binaries
+kubewatch
+kubewatch.exe
+*.exe
+*.out
+
+# Build artifacts
+dist/
+bin/
+
+# Go
+vendor/
+*.test
+*.prof
+coverage.out
+coverage.html
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Test output
+testdata/
