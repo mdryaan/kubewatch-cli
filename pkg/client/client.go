@@ -17,7 +17,7 @@ func New(kubeconfigPath string) (*KubeClient, error) {
 	resolved := resolveKubeconfig(kubeconfigPath)
 	cfg, err := buildRestConfig(resolved)
 	if err != nil {
-		return nil, fmt.Errorf("failed to build rest config: %w", err)
+		return nil, fmt.Errorf("no kubeconfig found — set KUBECONFIG or pass --kubeconfig: %w", err)
 	}
 
 	cs, err := kubernetes.NewForConfig(cfg)
