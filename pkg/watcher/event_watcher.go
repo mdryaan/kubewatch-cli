@@ -19,17 +19,18 @@ func NewEventWatcher(kc *client.KubeClient) *EventWatcher {
 }
 
 func (ew *EventWatcher) Watch(ctx context.Context, namespace string, labelSelector string, events chan<- WatchEvent) error {
-	watcher, err := ew.client.Clientset.CoreV1().Events(namespace).Watch(ctx, metav1.ListOptions{})
+	w, err := ew.client.Clientset.CoreV1().Events(namespace).Watch(ctx, metav1.ListOptions{})
 	if err != nil {
 		return fmt.Errorf("starting event watch: %w", err)
 	}
-	defer watcher.Stop()
+	defer w.Stop()
 
+	ch := w.ResultChan()
 	for {
 		select {
 		case <-ctx.Done():
 			return nil
-		case event, ok := <-watcher.ResultChan():
+		case event, ok := <-ch:
 			if !ok {
 				return nil
 			}
