@@ -1,4 +1,4 @@
-# 🔭 KubeWatch CLI
+# KubeWatch CLI
 
 > Real-time Kubernetes cluster monitoring, anomaly detection, and dependency visualization — right from your terminal.
 
@@ -12,37 +12,18 @@ KubeWatch CLI connects to any Kubernetes cluster via kubeconfig, watches resourc
 
 ---
 
-## Screenshots
-
-<p align="center">
-  <img src="public/screenshots/home.png" alt="KubeWatch CLI home" width="100%"/>
-</p>
-
-<table>
-  <tr>
-    <td><img src="public/screenshots/health.png" alt="Health command" width="100%"/></td>
-    <td><img src="public/screenshots/watch.png" alt="Watch command" width="100%"/></td>
-  </tr>
-  <tr>
-    <td><img src="public/screenshots/anomalies.png" alt="Anomalies command" width="100%"/></td>
-    <td><img src="public/screenshots/home.png" alt="Summary command" width="100%"/></td>
-  </tr>
-</table>
-
----
-
 ## Features
 
-- 🔍 **Real-time watching** — stream pod, deployment, service, and node events as they happen
-- 🏥 **Health checks** — instant health report for all resources in a namespace with green/yellow/red status
-- 🚨 **Anomaly detection** — automatically flags CrashLoopBackOff, OOMKilled, and Pending-too-long pods
-- 🌳 **Dependency graph** — visualize which pods belong to which deployments and which services target them
-- 📊 **Namespace summary** — at-a-glance resource counts and health overview per namespace
-- 🎨 **Colorized output** — green for healthy, yellow for warning, red for critical
-- 📋 **Multiple output formats** — table, JSON, or plain text
-- 🔧 **Kubeconfig auto-detection** — picks up `~/.kube/config` or `KUBECONFIG` env automatically
-- 🏷️ **Label selector support** — filter any command by Kubernetes label selectors
-- 🌐 **All-namespaces mode** — `--all-namespaces` flag works across every command
+- **Real-time watching** — stream pod, deployment, service, and node events as they happen
+- **Health checks** — instant health report for all resources in a namespace with green/yellow/red status
+- **Anomaly detection** — automatically flags CrashLoopBackOff, OOMKilled, and Pending-too-long pods
+- **Dependency graph** — visualize which pods belong to which deployments and which services target them
+- **Namespace summary** — at-a-glance resource counts and health overview per namespace
+- **Colorized output** — green for healthy, yellow for warning, red for critical
+- **Multiple output formats** — table, JSON, or plain text
+- **Kubeconfig auto-detection** — picks up `~/.kube/config` or `KUBECONFIG` env automatically
+- **Label selector support** — filter any command by Kubernetes label selectors
+- **All-namespaces mode** — `--all-namespaces` flag works across every command
 
 ---
 
@@ -78,6 +59,10 @@ KubeWatch CLI connects to any Kubernetes cluster via kubeconfig, watches resourc
 ---
 
 ## Architecture
+
+<p align="center">
+  <img src="public/screenshots/arch3.png" alt="KubeWatch CLI architecture" width="100%"/>
+</p>
 
 ```mermaid
 flowchart TD
