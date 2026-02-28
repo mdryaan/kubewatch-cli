@@ -28,27 +28,30 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
+	registerFlags()
+	bindFlags()
 
-	rootCmd.PersistentFlags().StringP("namespace", "n", config.DefaultNamespace, "Kubernetes namespace")
-	rootCmd.PersistentFlags().String("kubeconfig", "", "path to kubeconfig file (default: ~/.kube/config)")
-	rootCmd.PersistentFlags().StringP("output", "o", config.DefaultOutputFormat, "output format: table, json, plain")
-	rootCmd.PersistentFlags().StringP("selector", "l", "", "label selector (e.g. app=nginx)")
-	rootCmd.PersistentFlags().Bool("all-namespaces", false, "list resources across all namespaces")
-	rootCmd.PersistentFlags().Bool("no-color", false, "disable colorized output")
+	rootCmd.AddCommand(healthCmd, watchCmd, summaryCmd, anomaliesCmd, graphCmd, versionCmd)
+}
 
-	viper.BindPFlag("namespace", rootCmd.PersistentFlags().Lookup("namespace"))
-	viper.BindPFlag("kubeconfig", rootCmd.PersistentFlags().Lookup("kubeconfig"))
-	viper.BindPFlag("output", rootCmd.PersistentFlags().Lookup("output"))
-	viper.BindPFlag("selector", rootCmd.PersistentFlags().Lookup("selector"))
-	viper.BindPFlag("all-namespaces", rootCmd.PersistentFlags().Lookup("all-namespaces"))
-	viper.BindPFlag("no-color", rootCmd.PersistentFlags().Lookup("no-color"))
+func registerFlags() {
+	pf := rootCmd.PersistentFlags()
+	pf.StringP("namespace", "n", config.DefaultNamespace, "Kubernetes namespace")
+	pf.String("kubeconfig", "", "path to kubeconfig file (default: ~/.kube/config)")
+	pf.StringP("output", "o", config.DefaultOutputFormat, "output format: table, json, plain")
+	pf.StringP("selector", "l", "", "label selector (e.g. app=nginx)")
+	pf.Bool("all-namespaces", false, "list resources across all namespaces")
+	pf.Bool("no-color", false, "disable colorized output")
+}
 
-	rootCmd.AddCommand(healthCmd)
-	rootCmd.AddCommand(watchCmd)
-	rootCmd.AddCommand(summaryCmd)
-	rootCmd.AddCommand(anomaliesCmd)
-	rootCmd.AddCommand(graphCmd)
-	rootCmd.AddCommand(versionCmd)
+func bindFlags() {
+	pf := rootCmd.PersistentFlags()
+	viper.BindPFlag("namespace", pf.Lookup("namespace"))
+	viper.BindPFlag("kubeconfig", pf.Lookup("kubeconfig"))
+	viper.BindPFlag("output", pf.Lookup("output"))
+	viper.BindPFlag("selector", pf.Lookup("selector"))
+	viper.BindPFlag("all-namespaces", pf.Lookup("all-namespaces"))
+	viper.BindPFlag("no-color", pf.Lookup("no-color"))
 }
 
 func initConfig() {
