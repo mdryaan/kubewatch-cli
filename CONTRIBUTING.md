@@ -12,14 +12,35 @@ Thank you for taking the time to contribute. This document explains how to set u
 - A Kubernetes cluster (local via [kind](https://kind.sigs.k8s.io/) or [minikube](https://minikube.sigs.k8s.io/), or any remote cluster)
 - `kubectl` configured with a working kubeconfig
 
-### Clone and build
+### 1. Fork the repository
+
+Click the **Fork** button on [github.com/mdryaan/kubewatch-cli](https://github.com/mdryaan/kubewatch-cli) to create your own copy under your GitHub account.
+
+### 2. Clone your fork
 
 ```bash
-git clone https://github.com/mdryaan/kubewatch-cli.git
+git clone https://github.com/Your-username/kubewatch-cli.git
 cd kubewatch-cli
+```
+
+### 3. Add the upstream remote
+
+```bash
+git remote add upstream https://github.com/mdryaan/kubewatch-cli.git
+```
+
+### 4. Install dependencies and build
+
+```bash
 go mod download
 make build
 ./kubewatch version
+```
+
+### 5. Create a feature branch
+
+```bash
+git checkout -b feat/your-feature-name
 ```
 
 ### Run against a local cluster
@@ -35,6 +56,13 @@ export KUBECONFIG=$(kind get kubeconfig-path --name kubewatch-dev)
 ```bash
 make vet
 make build
+```
+
+### Keep your fork in sync
+
+```bash
+git fetch upstream
+git rebase upstream/main
 ```
 
 ---
@@ -113,7 +141,7 @@ func (w *MyWatcher) Watch(ctx context.Context, namespace string, labelSelector s
 
 - Keep PRs focused on a single concern — one feature, one fix, one refactor
 - Title format: `feat(scope): description`, `fix(scope): description`, `chore: description`
-- Rebase on main before opening a PR; do not merge-commit
+- Rebase on `upstream/main` before opening a PR; do not merge-commit
 - All code must compile: `make build` must succeed
 - `make vet` must pass with zero errors
 - If you add a new package, add a short note to this file explaining where it lives and what it does
