@@ -81,39 +81,22 @@ KubeWatch CLI connects to any Kubernetes cluster via kubeconfig, watches resourc
 
 ```mermaid
 flowchart TD
-    MAIN[main.go] --> ROOT
+    MAIN[main.go] --> CMD[cmd/\ncobra · viper]
 
-    subgraph CMD [cmd/]
-        ROOT[root.go\ncobra · viper]
-        HC[health.go]
-        WC[watch.go]
-        AC[anomalies.go]
-        GC[graph.go]
-        SC[summary.go]
-        VC[version.go]
-    end
+    CMD --> HEALTH[pkg/health\nHealthChecker]
+    CMD --> WATCHER[pkg/watcher\nResource Watchers]
+    CMD --> ANOMALY[pkg/anomaly\nAnomaly Detector]
+    CMD --> GRAPH[pkg/graph\nDependency Graph]
+    CMD --> SUMMARY[pkg/summary\nNamespace Summary]
+    CMD --> VERSION[pkg/version]
 
-    HC --> HEALTH[pkg/health\nHealthChecker]
-    WC --> WATCHER[pkg/watcher\nPod · Deploy · Svc · Node · Event]
-    AC --> ANOMALY[pkg/anomaly\nCrashLoop · OOMKill · Pending]
-    GC --> GRAPH[pkg/graph\nBuilder · Renderer]
-    SC --> SUMMARY[pkg/summary\nCollector · Reporter]
-    VC --> VER[pkg/version]
+    HEALTH & WATCHER & ANOMALY & GRAPH & SUMMARY --> CLIENT[pkg/client\nKubeClient]
+    CLIENT --> K8S[(Kubernetes API)]
 
-    HC & WC & AC & GC & SC --> CLIENT[pkg/client\nKubeClient]
-    HEALTH --> CLIENT
-    WATCHER --> CLIENT
-    ANOMALY --> CLIENT
-    GRAPH --> CLIENT
-    SUMMARY --> CLIENT
+    CMD & SUMMARY --> OUTPUT[pkg/output\ntable · json · color]
 
-    CLIENT --> K8S[(Kubernetes API\nclient-go)]
-
-    HC & WC & AC & GC & SC & VC --> OUTPUT[pkg/output\ntable · json · color · plain]
-    SUMMARY --> OUTPUT
-
-    ROOT & ANOMALY --> CFG[internal/config\nviper · defaults]
     HEALTH & ANOMALY --> UTILS[internal/utils\ntime · labels · strings]
+    CMD & ANOMALY --> CFG[internal/config\nviper · defaults]
 ```
 
 ---
