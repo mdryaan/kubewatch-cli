@@ -64,26 +64,6 @@ KubeWatch CLI connects to any Kubernetes cluster via kubeconfig, watches resourc
   <img src="public/screenshots/arch3.png" alt="KubeWatch CLI architecture" width="100%"/>
 </p>
 
-```mermaid
-flowchart TD
-    MAIN[main.go] --> CMD[cmd/\ncobra · viper]
-
-    CMD --> HEALTH[pkg/health\nHealthChecker]
-    CMD --> WATCHER[pkg/watcher\nResource Watchers]
-    CMD --> ANOMALY[pkg/anomaly\nAnomaly Detector]
-    CMD --> GRAPH[pkg/graph\nDependency Graph]
-    CMD --> SUMMARY[pkg/summary\nNamespace Summary]
-    CMD --> VERSION[pkg/version]
-
-    HEALTH & WATCHER & ANOMALY & GRAPH & SUMMARY --> CLIENT[pkg/client\nKubeClient]
-    CLIENT --> K8S[(Kubernetes API)]
-
-    CMD & SUMMARY --> OUTPUT[pkg/output\ntable · json · color]
-
-    HEALTH & ANOMALY --> UTILS[internal/utils\ntime · labels · strings]
-    CMD & ANOMALY --> CFG[internal/config\nviper · defaults]
-```
-
 ---
 
 ## Prerequisites
